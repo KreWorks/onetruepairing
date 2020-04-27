@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: a5ae44f3e0a0a5748a8baaf007e0cc14
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Lovelo
+  fontNames:
+  - Lovelo
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 4a90f019f01370140a9f4168f42bdf8e, type: 3}
+  - {fileID: 12800000, guid: 041a858e92f24554782b43f4a0227851, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
