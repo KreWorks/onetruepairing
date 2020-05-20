@@ -9,8 +9,8 @@ public class SaveScoreMenu : MonoBehaviour
 
 	void Start()
 	{
-		int scorePoints = PlayerPrefs.GetInt("ActualPoints", 100);
-		score.text = scorePoints.ToString() ;
+		//int scorePoints = PlayerPrefs.GetInt("ActualPoints", 100);
+		//score.text = scorePoints.ToString() ;
 	}
 
 	public void SaveScore()

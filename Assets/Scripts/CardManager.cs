@@ -10,11 +10,7 @@ public class CardManager : MonoBehaviour
 
 	public Color[] difficultyBackgrounds;
 
-	public TextMeshProUGUI timerText;
-
 	public AudioSource audioSource;
-
-	float timerCount; 
 
 	string[] icons;
 	string[] iconPairs;
@@ -27,9 +23,8 @@ public class CardManager : MonoBehaviour
 	CardController.FlipState flipState;
 	
     // Start is called before the first frame update
-    void Start()
+    public void StartGame()
     {
-		timerCount = 0;
 		flipState = CardController.FlipState.NoFlipping;
 
 		icons = new string[] {  "avocado",  "pi", "snowman", "pig", "cane", "tapemachine", "baby", "orange", "pear", "cloud", "tophat", "banana", "mountain", "cheese", "ribbon"};
@@ -87,9 +82,6 @@ public class CardManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		//Timer 
-		timerCount += Time.deltaTime;
-		timerText.text = Mathf.FloorToInt(timerCount).ToString();
 		//Anything happens only if nothing is flipping
 		if (flipState == CardController.FlipState.NoFlipping)
 		{
@@ -106,7 +98,8 @@ public class CardManager : MonoBehaviour
 		int cardCounter = FindObjectsOfType<CardController>().Length; 
 		if(cardCounter == 0)
 		{
-			int point = CalculatePoints((int)timerCount);
+			//TODO timer reference
+			int point = 100; //  CalculatePoints((int)timerCount);
 
 			PlayerPrefs.SetInt("ActualPoints", point);
 
@@ -115,7 +108,7 @@ public class CardManager : MonoBehaviour
 			{
 				Destroy(ps);
 			}
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 	}
 
