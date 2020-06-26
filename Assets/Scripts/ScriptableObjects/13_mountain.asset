@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2280fa3456644498d93264defa0fdc, type: 3}
+  m_Name: 13_mountain
+  m_EditorClassIdentifier: 
+  cardName: mountain
+  pairName: piramis
+  cardImage:
+  - {fileID: 21300000, guid: 1c8f088b6ee0c8f4db531cd870be03bc, type: 3}
+  - {fileID: 21300000, guid: e67568dc56301e640a8ca64ee3e8b9ae, type: 3}
+  - {fileID: 21300000, guid: 75c2dad4b9d00504ea4da9f81a849243, type: 3}

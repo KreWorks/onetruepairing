@@ -77,25 +77,26 @@ public class MenuController : MonoBehaviour
 
 	public void PlayEasyGame()
 	{
-		SetGamePrefabs(4, 3, "Easy", "large");
+		SetGamePrefabs(4, 3, (int) Difficulty.EASY);
 	}
 
 	public void PlayNormalGame()
 	{
-		SetGamePrefabs(5, 4, "Normal", "normal");
+		SetGamePrefabs(5, 4, (int) Difficulty.NORMAL);
 	}
 
 	public void PlayHardGame()
 	{
-		SetGamePrefabs(6, 5, "Hard", "small");
+		SetGamePrefabs(6, 5, (int) Difficulty.HARD);
 	}
 
-	void SetGamePrefabs(int x, int y, string difficulty, string spriteSize)
+	void SetGamePrefabs(int x, int y, int difficulty)
 	{
 		PlayerPrefs.SetInt("sizeX", x);
 		PlayerPrefs.SetInt("sizeY", y);
-		PlayerPrefs.SetString("Difficulty", difficulty);
-		PlayerPrefs.SetString("SpriteSize", spriteSize);
+		PlayerPrefs.SetInt("difficulty", difficulty);
+		//PlayerPrefs.SetString("Difficulty", difficulty);
+		//PlayerPrefs.SetString("SpriteSize", spriteSize);
 		//Exit all menu
 		ExitMenu();
 		//TODO start game

@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardController : MonoBehaviour
 {
+	public Image background;
+	public Image icon;
+
+	public ParticleSystem _hearts;
+
 	const int FORWARD = 1;
 	const int BACKWARD = -1;
 	public enum FlipState { NoFlipping, Flipping, BackFlipping };
@@ -13,11 +19,9 @@ public class CardController : MonoBehaviour
 	FlipState flipState = FlipState.NoFlipping;
 	Color imageSideColor = new Color (43f / 256,43f / 256,43f/ 256);
 
-	public SpriteRenderer background;
-	public GameObject icon;
 	public CardManager cardManager;
 
-	public ParticleSystem _hearts;
+	
 
 	float waitBeforeBackFlip = 0.5f;
 	float timerBeforeBackFlip = 0f;
@@ -49,18 +53,18 @@ public class CardController : MonoBehaviour
 
 	void ChangeImages()
 	{
-		string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
+		/*string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
 
 		Color c = icon.GetComponent<SpriteRenderer>().color;
 		icon.GetComponent<SpriteRenderer>().color = Color.white; // background.color;
 		background.sprite = Resources.Load<Sprite>("Icons/background_" + spriteSize);
 		background.color = imageSideColor;
-		icon.SetActive(true);
+		icon.SetActive(true);*/
 	}
 
 	void ChangeImagesBack()
 	{
-		string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
+		/*string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
 		string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
 
 		icon.GetComponent<SpriteRenderer>().color = background.color;
@@ -69,11 +73,11 @@ public class CardController : MonoBehaviour
 		string bg_name = "Icons/bg" + difficulty.ToLower() + "_" + spriteSize;
 		background.sprite = Resources.Load<Sprite>(bg_name);
 		background.color = Color.white;
-		icon.SetActive(false);
+		icon.SetActive(false);*/
 	}
 	
 	void Flip()
-	{
+	{/*
 		float speed = 1 * flipSpeed * Time.deltaTime; 
 		if (transform.rotation.eulerAngles.y >= 0f && transform.rotation.eulerAngles.y < 90f)
 		{
@@ -91,12 +95,12 @@ public class CardController : MonoBehaviour
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180f, transform.eulerAngles.z);
 			cardManager.PlaySoundEffect("Sounds/flip");
 			SetFlipState(FlipState.NoFlipping);
-		}
+		}*/
 	}
 
 	void BackFlip()
 	{
-
+		/*
 		float speed = -1 * flipSpeed * Time.deltaTime;
 		if (transform.rotation.eulerAngles.y > 90f && transform.rotation.eulerAngles.y <= 180f)
 		{
@@ -117,7 +121,7 @@ public class CardController : MonoBehaviour
 			cardManager.PlaySoundEffect("Sounds/backflip");
 			SetFlipState(FlipState.NoFlipping);
 			
-		}
+		}*/
 	}
 
 

@@ -25,7 +25,7 @@ public class CardManager : MonoBehaviour
     // Start is called before the first frame update
     public void StartGame()
     {
-		flipState = CardController.FlipState.NoFlipping;
+		/*flipState = CardController.FlipState.NoFlipping;
 
 		icons = new string[] {  "avocado",  "pi", "snowman", "pig", "cane", "tapemachine", "baby", "orange", "pear", "cloud", "tophat", "banana", "mountain", "cheese", "ribbon"};
 		iconPairs = new string[] { "egg", "pie", "eight", "socket", "candycane", "snail", "pineapple", "ball", "bulb", "sheep", "pot", "boomerang", "piramis", "cake", "candy"};
@@ -64,20 +64,10 @@ public class CardManager : MonoBehaviour
 			}
 		}
 
-		MixCards();
+		MixCards();*/
 	}
 
-	List<int> SetAvailableIndexes(int count)
-	{
-		List<int> availableIndex = new List<int>();
-
-		for (int i = 0; i < count; i++)
-		{
-			availableIndex.Add(i);
-		}
-
-		return availableIndex;
-	}
+	
 
 	// Update is called once per frame
 	void Update()
@@ -195,65 +185,7 @@ public class CardManager : MonoBehaviour
 		return iconName;
 	}
 
-	void CreateCube(Vector2 position, string iconName, string spriteSize, int index)
-	{
-		string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-		//Create card object
-		GameObject card = Instantiate(_card, position, transform.rotation);
-		// Get the object spriteRenderer, and set the background
-		SpriteRenderer bg = card.GetComponent<SpriteRenderer>();
-		//string bg_name = "Icons/background_" + spriteSize;
-		string bg_name = "Icons/bg" + difficulty.ToLower() + "_" + spriteSize;
-		bg.sprite = Resources.Load<Sprite>(bg_name);
-
-		//Background color depends on the difficulty level
-		int colorIndex = difficulty == "Easy" ? 0 : difficulty == "Normal" ? 1 : 2;
-		//bg.color = difficultyBackgrounds[colorIndex];
-		bg.color = Color.white;
-
-		//Get the icon SpriteRenderer and set an item
-		GameObject iconObj = card.transform.GetChild(card.transform.childCount - 1).gameObject;
-		SpriteRenderer icon = iconObj.GetComponent<SpriteRenderer>();
-
-		string icon_name = iconName + "_" + spriteSize;
-		icon.sprite = Resources.Load<Sprite>("Icons/" + icon_name);
-
-		cards.Add(card);
-	}
-
-	void GeneratePositions(int sizeX, int sizeY, Vector2 startPosition)
-	{
-		float shiftStep = sizeX == 4 ? 3f : sizeX == 5 ? 2.5f : 2f;
-		Vector2 shiftStart = sizeX == 4 ? new Vector2(-4.5f, 3f) : sizeX == 5 ? new Vector2(-5f, 3.75f) : new Vector2(-5f, 4f);
-
-		int count = sizeX * sizeY;
-
-		for (int i = 0; i < count; i++)
-		{
-			float shiftX = shiftStart.x + Mathf.Floor(i / sizeY) * shiftStep;
-			float shiftY = shiftStart.y - (i % sizeY) * shiftStep;
-			Vector3 shift = new Vector3(shiftX, shiftY, 0);
-
-			//Create card object
-			positions[i] = transform.position + shift;
-		}
-	}
-
-	void MixCards()
-	{
-		for(int i = 0; i < cards.Count; i++)
-		{
-			int random = Random.Range(0, cards.Count - 1);
-			while (random == i)
-			{
-				random = Random.Range(0, cards.Count - 1);
-			}
-
-			Vector3 newPosition = cards[i].transform.position;
-			cards[i].transform.position = cards[random].transform.position;
-			cards[random].transform.position = newPosition;
-		}
-	}
+	
 
 	public void PlaySoundEffect(string audioName)
 	{

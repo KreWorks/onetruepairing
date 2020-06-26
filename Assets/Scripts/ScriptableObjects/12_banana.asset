@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2280fa3456644498d93264defa0fdc, type: 3}
+  m_Name: 12_banana
+  m_EditorClassIdentifier: 
+  cardName: banana
+  pairName: boomerang
+  cardImage:
+  - {fileID: 21300000, guid: 97eb9a99a7ceb5b408c45cb5ace0692e, type: 3}
+  - {fileID: 21300000, guid: 2320ca07329a5ab41add83ee76ffce20, type: 3}
+  - {fileID: 21300000, guid: 8d86393738724184890b39f29faafee7, type: 3}
