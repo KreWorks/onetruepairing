@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DifficultyHelper 
+public static class DifficultyHelper
 {
 	public static string GetDifficultyString(Difficulty difficulty)
 	{
@@ -30,6 +30,21 @@ public static class DifficultyHelper
 				return "small";
 			default:
 				return "large";
+		}
+	}
+
+	public static Vector2 GetPlayAreaSize(Difficulty difficulty)
+	{
+		switch (difficulty)
+		{
+			case Difficulty.EASY:
+				return new Vector2(4, 3);
+			case Difficulty.NORMAL:
+				return new Vector2(5, 4);
+			case Difficulty.HARD:
+				return new Vector2(6, 5);
+			default:
+				return new Vector2(4, 3);
 		}
 	}
 }

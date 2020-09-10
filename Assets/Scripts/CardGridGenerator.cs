@@ -15,7 +15,10 @@ public class CardGridGenerator
 	List<GameObject> cards;
 
 	List<int> availableIndex;
-	Difficulty difficulty; 
+	Difficulty difficulty;
+
+	float headerHeightPercent = 0.09f;
+	float paddingPercent = 0.2f;
 
 	public CardGridGenerator(Vector3 position, GameObject cardPrefab, Color[] difficultyColors, CardCollectionSO cardCollection, Difficulty difficulty)
 	{
@@ -32,8 +35,9 @@ public class CardGridGenerator
 	// Start is called before the first frame update
 	public void Generate(Transform parent)
 	{
-		int sizeX = PlayerPrefs.GetInt("sizeX", 4);
-		int sizeY = PlayerPrefs.GetInt("sizeY", 3);
+		Vector2 playAreaSize = DifficultyHelper.GetPlayAreaSize(difficulty);
+		int sizeX = (int)playAreaSize.x;
+		int sizeY = (int)playAreaSize.y;
 		
 		int count = sizeX * sizeY;
 
@@ -46,10 +50,9 @@ public class CardGridGenerator
 		{
 			int randomIndex = GetRandomAvailableIndex();
 			//The card
-			CreateCard(positions[i], cardCollection.cards[randomIndex].GetCardImageBySize((int)difficulty), parent);
+			CreateCard(positions[i], cardCollection.cards[randomIndex], parent);
 			//The pair of the card
-			CreateCard(positions[i + 1], cardCollection.cards[randomIndex+1].GetCardImageBySize((int)difficulty), parent);
-			
+			CreateCard(positions[i + 1], cardCollection.cards[randomIndex+1], parent);
 		}
 
 		MixCards();
@@ -57,24 +60,23 @@ public class CardGridGenerator
 
 	void GeneratePositions(int sizeX, int sizeY, Vector2 startPosition, Transform parent)
 	{
-
+		float camHeight = Camera.main.pixelHeight;
 		//Camera.main.pixelWidth
-		this.cardSize = sizeX == 4 ? Screen.height * 0.30f : sizeX == 5 ? Screen.height * 0.25f : Screen.height * 0.20f;
-		float padding = -20.0f;
+		this.cardSize = sizeX == 4 ? camHeight * 0.23f : sizeX == 5 ? camHeight * 0.17f : camHeight * 0.14f;
+		float padding = paddingPercent = sizeY;
 
-		Vector2 startPadding = new Vector2(-(sizeX - 1) / 2 * (cardSize + padding), -(sizeY - 1) / 2 * (cardSize + padding));
+		Vector2 startPadding = new Vector2(-(float)(sizeX - 1) / 2.0f * (cardSize + padding), -camHeight* headerHeightPercent - (float)(sizeY - 1) / 2.0f * (cardSize + padding));
 
-		startPadding = new Vector2(parent.transform.position.x, parent.transform.position.y);
+		startPadding += new Vector2(parent.transform.position.x, parent.transform.position.y);
 		for (int y = 0; y < sizeY; y++)
 		{
 			for (int x = 0; x < sizeX; x++)
 			{
 				int index = y * sizeX + x;
 
-				positions[index] = startPadding + new Vector2((x - (sizeX - 1) / 2.0f) * (cardSize + padding), (y - (sizeY - 1) / 2.0f) * (cardSize + padding));
+				positions[index] = startPadding + new Vector2((x) * (cardSize + padding), (y) * (cardSize + padding));
 			}
 		}
-		
 	}
 
 	void MixCards()
@@ -117,15 +119,18 @@ public class CardGridGenerator
 		return randomIndex;
 	}
 
-	void CreateCard(Vector2 position, Sprite iconSprite, Transform parent)
+	void CreateCard(Vector2 position, CardSO cardSO, Transform parent)
 	{
 		//Create card object
 		GameObject card = GameObject.Instantiate(cardPrefab, position, Quaternion.identity, parent);
+		CardController cardController = card.GetComponent<CardController>();
+		cardController.SetCardSO(cardSO);
+		Sprite iconSprite = cardSO.GetCardImageBySize((int)difficulty);
 		// Get the object spriteRenderer, and set the background
 		SpriteRenderer bg = card.GetComponent<SpriteRenderer>();
 
 		string bg_name = "Icons/bg" + DifficultyHelper.GetDifficultyString(difficulty) + "_" + DifficultyHelper.GetIconSizeByDifficulty(difficulty);
-
+		Debug.Log(bg_name);
 		Image[] icons = card.GetComponentsInChildren<Image>();
 		Image icon = null;
 		Image background = null;
@@ -142,8 +147,6 @@ public class CardGridGenerator
 		}
 
 		background.sprite = Resources.Load<Sprite>(bg_name);
-		//Background color depends on the difficulty level
-		background.color = difficultyBackgrounds[(int)this.difficulty];
 		background.rectTransform.sizeDelta = new Vector2(cardSize, cardSize);
 
 		icon.sprite = iconSprite;

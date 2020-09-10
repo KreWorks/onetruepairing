@@ -11,15 +11,13 @@ public class GameManager : MonoBehaviour
 	public CardCollectionSO cardCollection;
 	public GameObject playArea;
 
-
 	GameState gameState;
 
 
 	// Start is called before the first frame update
 	void Start()
     {
-		Difficulty difficulty = (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
-
+		Difficulty difficulty = Difficulty.HARD; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
 
 		CardGridGenerator cardGenenrator = new CardGridGenerator(transform.position, cardPrefab, difficultyBackgrounds, cardCollection, difficulty);
 
