@@ -9,6 +9,7 @@ public class CardController : MonoBehaviour
 	public Image icon;
 
 	public ParticleSystem _hearts;
+	CardSO cardType;
 
 	const int FORWARD = 1;
 	const int BACKWARD = -1;
@@ -20,8 +21,6 @@ public class CardController : MonoBehaviour
 	Color imageSideColor = new Color (43f / 256,43f / 256,43f/ 256);
 
 	public CardManager cardManager;
-
-	
 
 	float waitBeforeBackFlip = 0.5f;
 	float timerBeforeBackFlip = 0f;
@@ -38,7 +37,8 @@ public class CardController : MonoBehaviour
 		if (flipState == FlipState.Flipping)
 		{
 			Flip();
-		} else if(flipState == FlipState.BackFlipping)
+		}
+		else if(flipState == FlipState.BackFlipping)
 		{
 			if (timerBeforeBackFlip < waitBeforeBackFlip)
 			{
@@ -49,6 +49,11 @@ public class CardController : MonoBehaviour
 				BackFlip();
 			}
 		}
+	}
+
+	public void SetCardSO(CardSO card)
+	{
+		this.cardType = card;
 	}
 
 	void ChangeImages()
