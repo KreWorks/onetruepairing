@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class MemorizeState : CardState
 {
+	public float memorizeTime;
+	public MemorizeState(CardController cardController, float memorizeTime) : base(cardController)
+	{
+		this.memorizeTime = memorizeTime;
+	}
+
 	public override void EnterState()
 	{
 		throw new System.NotImplementedException();
 	}
 
-	public override void ExitState()
+	public override void EndState()
 	{
 		throw new System.NotImplementedException();
 	}

@@ -4,23 +4,12 @@ using UnityEngine;
 
 public class FrontState : CardState
 {
-	public override void EnterState()
+	public FrontState(CardController cardController) : base(cardController)
 	{
-		throw new System.NotImplementedException();
-	}
-
-	public override void ExitState()
-	{
-		throw new System.NotImplementedException();
 	}
 
 	public override void OnClickAction()
 	{
-		throw new System.NotImplementedException();
-	}
-
-	public override void UpdateActivity()
-	{
-		throw new System.NotImplementedException();
+		cardController.TransitionState(cardController.flippingState);
 	}
 }

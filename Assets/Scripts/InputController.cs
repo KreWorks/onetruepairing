@@ -20,10 +20,12 @@ public class InputController : MonoBehaviour
 
 			RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
 
+
 			if (hit.collider != null && hit.collider.gameObject.tag == "Card")
 			{
 				CardController hittedCard = hit.collider.gameObject.GetComponent<CardController>();
-				hittedCard.SetFlipState(CardController.FlipState.Flipping);
+				hittedCard.actualState.OnClickAction();
+				//hittedCard.SetFlipState(CardController.FlipState.Flipping);
 				/*
 				 * TODO some observer with card objects
 				if (card1 == null)

@@ -12,14 +12,21 @@ public class GameManager : MonoBehaviour
 	public GameObject playArea;
 
 	GameState gameState;
-
+	/*
+	CardSelection
+	PairSelection
+	Memorize
+	Matching
+	EndGame - Game results and menu
+	Menu - Game start in here
+	*/
 
 	// Start is called before the first frame update
 	void Start()
     {
-		Difficulty difficulty = Difficulty.HARD; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
+		Difficulty difficulty = Difficulty.EASY; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
 
-		CardGridGenerator cardGenenrator = new CardGridGenerator(transform.position, cardPrefab, difficultyBackgrounds, cardCollection, difficulty);
+		CardGridGenerator cardGenenrator = new CardGridGenerator(cardPrefab, difficultyBackgrounds, cardCollection, difficulty);
 
 		cardGenenrator.Generate(playArea.transform);
 

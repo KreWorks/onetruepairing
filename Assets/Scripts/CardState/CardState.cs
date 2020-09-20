@@ -4,9 +4,16 @@ using UnityEngine;
 
 public abstract class CardState
 {
-	public abstract void EnterState();
-	public abstract void ExitState();
-	public abstract void OnClickAction();
-	public abstract void UpdateActivity();
+	protected CardController cardController; 
+
+	public CardState(CardController cardController)
+	{
+		this.cardController = cardController;
+	}
+
+	public virtual void EnterState() { return; }
+	public virtual void EndState() { return; }
+	public virtual void OnClickAction() { return; }
+	public virtual void UpdateActivity() { return; }
 	
 }

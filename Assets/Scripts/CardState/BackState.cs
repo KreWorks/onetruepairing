@@ -4,23 +4,13 @@ using UnityEngine;
 
 public class BackState : CardState
 {
-	public override void EnterState()
+	public BackState(CardController cardController) : base(cardController)
 	{
-		throw new System.NotImplementedException();
-	}
-
-	public override void ExitState()
-	{
-		throw new System.NotImplementedException();
 	}
 
 	public override void OnClickAction()
 	{
-		throw new System.NotImplementedException();
-	}
-
-	public override void UpdateActivity()
-	{
-		throw new System.NotImplementedException();
+		Debug.Log("Card was Clicked.");
+		cardController.TransitionState(cardController.flippingState);
 	}
 }

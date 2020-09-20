@@ -20,7 +20,7 @@ public class CardManager : MonoBehaviour
 	GameObject card1 = null;
 	GameObject card2 = null;
 
-	CardController.FlipState flipState;
+//	CardController.FlipState flipState;
 	
     // Start is called before the first frame update
     public void StartGame()
@@ -73,7 +73,7 @@ public class CardManager : MonoBehaviour
 	void Update()
     {
 		//Anything happens only if nothing is flipping
-		if (flipState == CardController.FlipState.NoFlipping)
+		/*if (flipState == CardController.FlipState.NoFlipping)
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
@@ -83,7 +83,7 @@ public class CardManager : MonoBehaviour
 			{
 				Pairing();
 			}
-		}
+		}*/
 
 		int cardCounter = FindObjectsOfType<CardController>().Length; 
 		if(cardCounter == 0)
@@ -124,7 +124,7 @@ public class CardManager : MonoBehaviour
 		if (hit.collider != null && hit.collider.gameObject.tag == "Card")
 		{
 			CardController hittedCard = hit.collider.gameObject.GetComponent<CardController>();
-			hittedCard.SetFlipState(CardController.FlipState.Flipping);
+			//hittedCard.SetFlipState(CardController.FlipState.Flipping);
 			if (card1 == null)
 			{
 				card1 = hit.collider.gameObject;
@@ -141,7 +141,7 @@ public class CardManager : MonoBehaviour
 		string icon1 = card1.transform.GetChild(card1.transform.childCount - 1).gameObject.GetComponent<SpriteRenderer>().sprite.name;
 		string icon2 = card2.transform.GetChild(card2.transform.childCount - 1).gameObject.GetComponent<SpriteRenderer>().sprite.name;
 
-		if (IsPair(icon1, icon2) && card2.GetComponent<CardController>().GetFlipState() == CardController.FlipState.NoFlipping)
+		/*if (IsPair(icon1, icon2) && card2.GetComponent<CardController>().GetFlipState() == CardController.FlipState.NoFlipping)
 		{
 			Destroy(card1);
 			Destroy(card2);
@@ -155,7 +155,7 @@ public class CardManager : MonoBehaviour
 			card2.GetComponent<CardController>().SetFlipState(CardController.FlipState.BackFlipping);
 			card1 = null;
 			card2 = null;
-		}
+		}*/
 	}
 
 
