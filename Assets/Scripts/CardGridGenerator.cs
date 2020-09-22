@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CardGridGenerator 
 {
 	GameObject cardPrefab;
-	Color[] difficultyBackgrounds;
 	CardCollectionSO cardCollection;
 
 	Vector2[] positions;
@@ -16,17 +15,19 @@ public class CardGridGenerator
 	List<int> availableIndex;
 	Difficulty difficulty;
 
-	float headerHeight = 100.0f;
-	float padding = 1.0f;
+	float padding = 30.0f;
+	float canvasHeight;
+	float playAreaWidth;
 
-	public CardGridGenerator(GameObject cardPrefab, Color[] difficultyColors, CardCollectionSO cardCollection, Difficulty difficulty)
+	public CardGridGenerator(GameObject cardPrefab, CardCollectionSO cardCollection, Difficulty difficulty, float canvasHeight, float playAreaWidth)
 	{
-		this.difficultyBackgrounds = difficultyColors;
 		this.cardPrefab = cardPrefab;
 		this.cardCollection = cardCollection;
 
 		this.difficulty = difficulty;
 
+		this.canvasHeight = canvasHeight;
+		this.playAreaWidth = playAreaWidth;
 		GenerateAvailableIndexes();
 	}
 
@@ -57,26 +58,23 @@ public class CardGridGenerator
 
 	void GeneratePositions(int sizeX, int sizeY, Transform parent)
 	{
-		float camHeight = Camera.main.pixelHeight;
+		float screenHeight = Screen.height;
+		float paddingPercent = (float)(this.padding * (sizeY + 1)) / canvasHeight;
 
-		float headerHeightPercent = this.headerHeight / camHeight;
-		float paddingPercent = (this.padding * (sizeY + 1)) / camHeight;
+		this.cardSize = (canvasHeight - (this.padding * (sizeY + 1))) / sizeY;
 
-		this.cardSize = (camHeight) / sizeY;
-
-		float startPaddingX = -(float)(cardSize * (sizeX - 1) / 2.0f) - (float)(this.padding * (sizeX ) / 2.0f);
-		float startPaddingY = -(float)(cardSize * (sizeY - 1) / 2.0f) - (float)(this.padding * (sizeY ) / 2.0f) - headerHeight / 2.0f;
-
+		float startPaddingX = (float)playAreaWidth / 2.0f - (float)(cardSize * sizeX + padding * (sizeX - 1)) / 2.0f;
+		float startPaddingY = (float)cardSize / 2.0f - this.padding ; 
+		
 		Vector2 startPadding = new Vector2(startPaddingX, startPaddingY);
 
-		startPadding += new Vector2(parent.transform.position.x, parent.transform.position.y);
 		for (int y = 0; y < sizeY; y++)
 		{
 			for (int x = 0; x < sizeX; x++)
 			{
 				int index = y * sizeX + x;
 
-				this.positions[index] = startPadding + new Vector2((x / 2.0f) * cardSize + (2 * x * this.padding), (y / 2.0f) * cardSize + (2 * y * this.padding));
+				this.positions[index] = startPadding + new Vector2((x / 2.0f) * cardSize + (x * this.padding), (y / 2.0f) * cardSize + (y * this.padding));
 			}
 		}
 	}

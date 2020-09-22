@@ -11,7 +11,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	public Image backface;
 
 	public ParticleSystem _hearts;
-	CardSO cardType;
+	public CardSO cardType;
+	GameManager gameManager; 
 
 	public CardState actualState;
 	public FrontState frontState;
@@ -32,15 +33,13 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	float angleTolerance = 10f;
 	Color imageSideColor = new Color(43f / 256, 43f / 256, 43f / 256);
 
-	public CardManager cardManager;
-
 	float waitBeforeBackFlip = 0.5f;
 	float timerBeforeBackFlip = 0f;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		cardManager = (CardManager)FindObjectOfType(typeof(CardManager));
+		gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
 
 		frontState = new FrontState(this);
 		backState = new BackState(this);
@@ -120,61 +119,35 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 			{
 				ChangeScale(1.0f);
 				TransitionState(this.frontState);
+				gameManager.SetSelectedCard(this);
 			}
 		}
 	}
-
-	void ChangeImages()
-	{
-		/*string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
-
-		Color c = icon.GetComponent<SpriteRenderer>().color;
-		icon.GetComponent<SpriteRenderer>().color = Color.white; // background.color;
-		background.sprite = Resources.Load<Sprite>("Icons/background_" + spriteSize);
-		background.color = imageSideColor;
-		icon.SetActive(true);*/
-	}
-
-	void ChangeImagesBack()
-	{
-		/*string spriteSize = PlayerPrefs.GetString("SpriteSize", "large");
-		string difficulty = PlayerPrefs.GetString("Difficulty", "Easy");
-
-		icon.GetComponent<SpriteRenderer>().color = background.color;
-		int colorIndex = difficulty == "Easy" ? 0 : difficulty == "Normal" ? 1 : 2;
-		//background.color = cardManager.difficultyBackgrounds[colorIndex];
-		string bg_name = "Icons/bg" + difficulty.ToLower() + "_" + spriteSize;
-		background.sprite = Resources.Load<Sprite>(bg_name);
-		background.color = Color.white;
-		icon.SetActive(false);*/
-	}
 	
-	
-
-	void BackFlip()
+	public void BackFlip()
 	{
-		/*
-		float speed = -1 * flipSpeed * Time.deltaTime;
-		if (transform.rotation.eulerAngles.y > 90f && transform.rotation.eulerAngles.y <= 180f)
+		//Hide foreground
+		if (backface.gameObject.activeSelf == false)
 		{
-			transform.RotateAround(transform.position, Vector3.up, speed);
+			cardScale = cardScale * flipScale;
+			ChangeScale(cardScale);
+			//Show foreground
+			if (flipTolerance > cardScale)
+			{
+				SetBackfaceActive();
+			}
 		}
-		else if (icon.activeInHierarchy == true && Mathf.Abs(transform.rotation.eulerAngles.y - 90f) < angleTolerance)
+		else
 		{
-			transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90f, transform.eulerAngles.z);
-			ChangeImagesBack();
+			cardScale = cardScale * (1.0f / flipScale);
+			ChangeScale(cardScale);
+
+			if (cardScale >= 1.0f)
+			{
+				ChangeScale(1.0f);
+				TransitionState(this.backState);
+			}
 		}
-		else if (transform.rotation.eulerAngles.y > 0f && transform.rotation.eulerAngles.y <= 90f)
-		{
-			transform.RotateAround(transform.position, Vector3.up, speed);
-		}
-		else if (icon.activeSelf == false && ((transform.rotation.eulerAngles.y) < angleTolerance || Mathf.Abs(transform.rotation.eulerAngles.y - 360f) < angleTolerance))
-		{
-			transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0f, transform.eulerAngles.z);
-			cardManager.PlaySoundEffect("Sounds/backflip");
-			SetFlipState(FlipState.NoFlipping);
-			
-		}*/
 	}
 
 

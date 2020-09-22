@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PairSelectionState : MonoBehaviour
+public class PairSelectionState : GameState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public PairSelectionState(GameManager gameManager) : base(gameManager)
+	{
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void UpdateAction()
+	{
+		return;
+	}
 }

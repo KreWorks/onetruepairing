@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MatchingCardsState : MonoBehaviour
+public class MatchingCardsState : GameState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public MatchingCardsState(GameManager gameManager) : base(gameManager)
+	{
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void UpdateAction()
+	{
+		gameManager.BackFlipSelectedCards();
+	}
 }

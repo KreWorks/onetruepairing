@@ -2,17 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MemorizeCardsState : MonoBehaviour
+public class MemorizeCardsState : GameState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	float timeToWait;
+	float timer; 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public MemorizeCardsState(GameManager gameManager, float timeToMemorize) : base(gameManager)
+	{
+		timeToWait = timeToMemorize;
+	}
+
+	public override void EnterState()
+	{
+		this.timer = 0.0f;
+	}
+
+	public override void UpdateAction()
+	{
+		timer += Time.deltaTime;
+
+		if (timer >= timeToWait)
+		{
+			gameManager.BackFlipSelectedCards();
+			gameManager.TransitionState(gameManager.cardSelectionState);
+		}
+	}
 }

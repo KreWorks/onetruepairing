@@ -7,4 +7,9 @@ public class CardSelectionState : GameState
 	public CardSelectionState(GameManager gameManager) : base(gameManager)
 	{
 	}
+
+	public override void UpdateAction()
+	{
+		return;
+	}
 }

@@ -10,4 +10,9 @@ public abstract class GameState
 	{
 		this.gameManager = gameManager;
 	}
+
+	public virtual void EnterState() { return; }
+	public virtual void EndState() { return; }
+
+	public abstract void UpdateAction();
 }
