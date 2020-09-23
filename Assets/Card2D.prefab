@@ -55,8 +55,9 @@ MonoBehaviour:
   background: {fileID: 0}
   icon: {fileID: 0}
   backface: {fileID: 0}
-  _hearts: {fileID: 3632061687458112483, guid: e3338f575c896e24ca138e104ff09e0f, type: 3}
-  cardManager: {fileID: 0}
+  _heartsParticleSystemPrefab: {fileID: 3632061687458112483, guid: e3338f575c896e24ca138e104ff09e0f,
+    type: 3}
+  cardType: {fileID: 0}
 --- !u!61 &5725758245830083262
 BoxCollider2D:
   m_ObjectHideFlags: 0

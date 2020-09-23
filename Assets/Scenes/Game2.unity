@@ -385,6 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasManager: {fileID: 989551062}
   playArea: {fileID: 1826114185}
+  selectedCards: []
 --- !u!4 &132918822
 Transform:
   m_ObjectHideFlags: 0

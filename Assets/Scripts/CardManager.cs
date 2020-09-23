@@ -185,8 +185,6 @@ public class CardManager : MonoBehaviour
 		return iconName;
 	}
 
-	
-
 	public void PlaySoundEffect(string audioName)
 	{
 		audioSource.PlayOneShot(Resources.Load<AudioClip>(audioName));

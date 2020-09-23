@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class HideAwayState : CardState
 {
-	public HideAwayState(CardController cardController) : base(cardController)
+	float timer;
+	float timeToWaitBeforeDestroy;
+	public HideAwayState(CardController cardController, float timeToWait) : base(cardController)
 	{
+		timeToWaitBeforeDestroy = timeToWait;
 	}
 
-	
+	public override void EnterState()
+	{
+		GameObject.Destroy(cardController.gameObject);
+	}
+
 }

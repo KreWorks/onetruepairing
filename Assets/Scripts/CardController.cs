@@ -10,7 +10,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	public Image icon;
 	public Image backface;
 
-	public ParticleSystem _hearts;
+	public ParticleSystem _heartsParticleSystemPrefab;
 	public CardSO cardType;
 	GameManager gameManager; 
 
@@ -25,9 +25,6 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	float cardScale = 1.0f;
 	float flipScale = 0.95f;
 	float flipTolerance = 0.15f;
-
-	const int FORWARD = 1;
-	const int BACKWARD = -1;
 
 	float flipSpeed = 400f;
 	float angleTolerance = 10f;
@@ -45,8 +42,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 		backState = new BackState(this);
 		flippingState = new FlippingState(this);
 		backFlippingState = new BackFlippingState(this);
-		memorizeState = new MemorizeState(this, 5.0f);
-		hideAwayState = new HideAwayState(this);
+		hideAwayState = new HideAwayState(this, 1.00f);
 
 		actualState = backState;
 	}
@@ -89,6 +85,12 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 		icon.gameObject.SetActive(true);
 		backface.gameObject.SetActive(false);
 	}
+	public void HideAllFaces()
+	{
+		background.gameObject.SetActive(false);
+		icon.gameObject.SetActive(false);
+		backface.gameObject.SetActive(false);
+	}
 
 	public void ChangeScale(float newScale)
 	{
@@ -119,7 +121,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 			{
 				ChangeScale(1.0f);
 				TransitionState(this.frontState);
-				gameManager.SetSelectedCard(this);
+				gameManager.SetSelectedCard(this.gameObject);
 			}
 		}
 	}
@@ -150,11 +152,11 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 		}
 	}
 
-
-	private void OnDestroy()
+	public void OnDestroy()
 	{
+		Debug.Log("Got destroyed");
 		Vector3 heartPos = new Vector3(transform.position.x, transform.position.y, -1.0f);
-		ParticleSystem endGame = Instantiate(_hearts, heartPos, transform.rotation);
+		ParticleSystem endGame = Instantiate(_heartsParticleSystemPrefab, heartPos, transform.rotation);
 		endGame.Play();
 	}
 

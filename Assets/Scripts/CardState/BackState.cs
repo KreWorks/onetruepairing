@@ -10,7 +10,6 @@ public class BackState : CardState
 
 	public override void OnClickAction()
 	{
-		Debug.Log("Card was Clicked.");
 		cardController.TransitionState(cardController.flippingState);
 	}
 }

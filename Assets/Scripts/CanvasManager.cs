@@ -19,7 +19,6 @@ public class CanvasManager : MonoBehaviour
 	void Awake()
 	{
 		canvasScaler = this.GetComponent<CanvasScaler>();
-		Debug.Log(canvasScaler);
 		canvasResolution = canvasScaler.referenceResolution;
 
 		canvasWidth = canvasResolution.x;
@@ -27,11 +26,6 @@ public class CanvasManager : MonoBehaviour
 
 	}
 
-	// Start is called before the first frame update
-	void Start()
-    {
-		
-    }
 
 	public void StartResizer()
 	{
@@ -44,7 +38,6 @@ public class CanvasManager : MonoBehaviour
 
 	public void GenerateCardField(Difficulty difficulty)
 	{
-		Debug.Log(canvasResolution);
 		CardGridGenerator cardGenenrator = new CardGridGenerator(cardPrefab, cardCollection, difficulty, canvasResolution.y, canvasWidth * (1 -  sidebarPercent));
 
 		cardGenenrator.Generate(playArea.transform);

@@ -8,4 +8,8 @@ public class BackFlippingState : CardState
 	{
 	}
 
+	public override void UpdateActivity()
+	{
+		cardController.BackFlip();
+	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,12 +16,12 @@ public class GameManager : MonoBehaviour
 	public MatchingCardsState matchingCardsState;
 	//TODO EndGameState and MenuState
 
-	CardController[] selectedCards;
+	public GameObject[] selectedCards;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		selectedCards = new CardController[2];
+		selectedCards = new GameObject[2];
 		selectedCards[0] = null;
 		selectedCards[1] = null;
 
@@ -40,20 +41,21 @@ public class GameManager : MonoBehaviour
 	{
 		cardSelectionState = new CardSelectionState(this);
 		pairSelectionState = new PairSelectionState(this);
-		memorizeCardsState = new MemorizeCardsState(this, 1.0f);
-		matchingCardsState = new MatchingCardsState(this);
+		memorizeCardsState = new MemorizeCardsState(this, 0.5f);
+		matchingCardsState = new MatchingCardsState(this, 0.2f);
 
 		gameState = cardSelectionState;
 	}
 
 	public void TransitionState(GameState newState)
 	{
-		gameState.EnterState();
-		gameState = newState;
+		Debug.Log(newState.ToString());
 		gameState.EndState();
+		gameState = newState;
+		gameState.EnterState();
 	}
 
-	public void SetSelectedCard(CardController selectedCard)
+	public void SetSelectedCard(GameObject selectedCard)
 	{
 		if (selectedCards[0] == null)
 		{
@@ -75,37 +77,17 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	public void RemoveSelectedCard(CardController selectedCard)
+	public void RemoveSelectedCards()
 	{
-		if (selectedCards[0] == selectedCard)
-		{
-			selectedCards[0] = null;
-		}
-		else if (selectedCards[1] == selectedCard)
-		{
-			selectedCards[1] = null;
-		}
+		selectedCards[0] = null;
+		selectedCards[1] = null;
 	}
 
 	bool MatchSelectedCards()
 	{
-		return selectedCards[0] != null && selectedCards[1] != null && selectedCards[0].cardType.cardName == selectedCards[1].cardType.pairName && selectedCards[0].cardType.pairName == selectedCards[1].cardType.cardName;
-	}
+		CardSO first = selectedCards[0].GetComponent<CardController>().cardType;
+		CardSO second = selectedCards[1].GetComponent<CardController>().cardType;
 
-	public void BackFlipSelectedCards()
-	{
-		foreach(CardController card in selectedCards)
-		{
-			card.TransitionState(card.backFlippingState);
-			RemoveSelectedCard(card);
-		}
-	}
-
-	public void HideAwayMatchingCards()
-	{
-		foreach(CardController card in selectedCards)
-		{
-			card.TransitionState(card.hideAwayState);
-		}
+		return first != null && second != null && first.cardName == second.pairName && first.pairName == second.cardName;
 	}
 }

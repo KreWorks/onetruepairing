@@ -23,8 +23,16 @@ public class MemorizeCardsState : GameState
 
 		if (timer >= timeToWait)
 		{
-			gameManager.BackFlipSelectedCards();
 			gameManager.TransitionState(gameManager.cardSelectionState);
+			gameManager.RemoveSelectedCards();
 		}
+	}
+
+	public override void EndState()
+	{
+		CardController first = gameManager.selectedCards[0].GetComponent<CardController>();
+		first.TransitionState(first.backFlippingState);
+		CardController second = gameManager.selectedCards[1].GetComponent<CardController>();
+		second.TransitionState(second.backFlippingState);
 	}
 }
