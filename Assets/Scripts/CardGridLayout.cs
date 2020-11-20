@@ -12,9 +12,11 @@ public class CardGridLayout : LayoutGroup
 	public override void CalculateLayoutInputHorizontal()
 	{
 		base.CalculateLayoutInputHorizontal();
-
-		rows = transform.childCount == 30 ? 5 : (transform.childCount == 20 ? 4 : 3);
-		columns = transform.childCount == 30 ? 6 : (transform.childCount == 20 ? 5 : 4);
+		if (rows == 0 || columns == 0)
+		{
+			rows = 4;
+			columns = 5;
+		}
 
 		float parentWidth = rectTransform.rect.width;
 		float parentHeight = rectTransform.rect.height;
@@ -45,6 +47,12 @@ public class CardGridLayout : LayoutGroup
 			SetChildAlongAxis(item, 0, xPos, cellSize.x);
 			SetChildAlongAxis(item, 1, yPos, cellSize.y);
 		}
+		
+	}
+
+	public RectTransform GetRectTransform()
+	{
+		return rectTransform;
 	}
 
 	public override void CalculateLayoutInputVertical()

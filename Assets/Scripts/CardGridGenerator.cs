@@ -1,173 +1,82 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CardGridGenerator 
 {
-	GameObject cardPrefab;
 	CardCollectionSO cardCollection;
 
 	Vector2[] positions;
-	float cardSize;
 	List<GameObject> cards;
 
-	List<int> availableIndex;
-	Difficulty difficulty;
+	List<int> availableImageIndexes;
+	List<int> availablePositionIndexes;
 
-	float padding = 30.0f;
-	float canvasHeight;
-	float playAreaWidth;
+	int cardCount;
 
-	public CardGridGenerator(GameObject cardPrefab, CardCollectionSO cardCollection, Difficulty difficulty, float canvasHeight, float playAreaWidth)
+	public CardGridGenerator(CardCollectionSO cardCollection, GameDatasSO gameDatas)
 	{
-		this.cardPrefab = cardPrefab;
 		this.cardCollection = cardCollection;
+		cardCount = gameDatas.rows * gameDatas.columns;
 
-		this.difficulty = difficulty;
-
-		this.canvasHeight = canvasHeight;
-		this.playAreaWidth = playAreaWidth;
-		GenerateAvailableIndexes();
+		GenerateAvailableImageIndexes();
+		GenerateAvailablePositionIndexes(cardCount);
 	}
 
-	// Start is called before the first frame update
-	public void Generate(Transform parent)
+	public CardSO GetRandomAvailableCardSO()
 	{
-		Vector2 playAreaSize = DifficultyHelper.GetPlayAreaSize(difficulty);
-		int sizeX = (int)playAreaSize.x;
-		int sizeY = (int)playAreaSize.y;
-		
-		int count = sizeX * sizeY;
+		int random = UnityEngine.Random.Range(0, this.availableImageIndexes.Count);
+		int randomIndex = availableImageIndexes[random];
 
-		this.positions = new Vector2[count];
-		cards = new List<GameObject>();
+		availableImageIndexes.RemoveAt(random);
 
-		GeneratePositions(sizeX, sizeY, parent);
-		for (int i = 0; i < count; i += 2)
-		{
-			int randomIndex = GetRandomAvailableIndex();
-			string cardName = "Card number ";
-			//The card
-			CreateCard(this.positions[i], cardCollection.cards[randomIndex], parent, cardName + i.ToString());
-			//The pair of the card
-			CreateCard(this.positions[i +1], cardCollection.cards[randomIndex+1], parent, cardName + (i+1).ToString());
-		}
-
-		MixCards();
+		return cardCollection.cards[randomIndex];
 	}
 
-	void GeneratePositions(int sizeX, int sizeY, Transform parent)
+	public CardSO GetCardPairSO(string cardPairName)
 	{
-		this.cardSize = (canvasHeight - (this.padding * (sizeY + 1))) / sizeY;
-
-		float startPaddingX = -(float)(cardSize * sizeX + padding * (sizeX - 1)) / 2.0f;
-		float startPaddingY = -(float)(cardSize * sizeY + padding * (sizeY - 1)) / 2.0f;
-
-		Vector2 startPadding = new Vector2(startPaddingX, startPaddingY);
-
-		for (int y = 0; y < sizeY; y++)
+		foreach(CardSO card in cardCollection.cards)
 		{
-			for (int x = 0; x < sizeX; x++)
+			if(card.name == cardPairName)
 			{
-				int index = y * sizeX + x;
-
-				Vector2 pos = new Vector2(x * (cardSize + this.padding), y * (cardSize + this.padding));
-				//this.positions[index] = startPadding + new Vector2((x / 2.0f) * cardSize + (x * this.padding), (y / 2.0f) * cardSize + (y * this.padding));
-				this.positions[index] = (startPadding + pos);
+				return card;
 			}
 		}
+
+		return null;
 	}
 
-	void MixCards()
+	public int GetRandomCardPositionIndex()
 	{
-		for (int i = 0; i < cards.Count; i++)
+		int randomIndex = UnityEngine.Random.Range(0, cardCount);
+
+		while (!availablePositionIndexes.Contains(randomIndex))
 		{
-			int random = Random.Range(0, cards.Count - 1);
-			while (random == i)
-			{
-				random = Random.Range(0, cards.Count - 1);
-			}
-
-			Vector3 newPosition = cards[i].transform.position;
-			cards[i].transform.position = cards[random].transform.position;
-			cards[random].transform.position = newPosition;
+			randomIndex = UnityEngine.Random.Range(0, cardCount);
 		}
+
+		return randomIndex;
 	}
 
-	void GenerateAvailableIndexes()
+	void GenerateAvailableImageIndexes()
 	{
-		availableIndex = new List<int>();
+		availableImageIndexes = new List<int>();
 		int index = cardCollection.cards.Count;
 
 		for(int i = 0; i < index; i++)
 		{
 			if (i % 2 == 0)
 			{
-				this.availableIndex.Add(i);
+				this.availableImageIndexes.Add(i);
 			}
 		}
 	}
 
-	int GetRandomAvailableIndex()
+	private void GenerateAvailablePositionIndexes(int cardCount)
 	{
-		int random = Random.Range(0, this.availableIndex.Count);
-		int randomIndex = availableIndex[random];
-
-		availableIndex.RemoveAt(random);
-
-		return randomIndex;
-	}
-
-	void CreateCard(Vector2 position, CardSO cardSO, Transform parent, string cardName)
-	{
-		//Create card object
-		GameObject card = GameObject.Instantiate(cardPrefab); //, position, Quaternion.identity, parent);
-		Debug.Log(cardName + " " + position);
-		Debug.Log(cardName + " " + card.transform.position);
-		card.name = cardName;
-		//card.transform.position = position;
-		card.transform.parent = parent;
-		card.GetComponent<RectTransform>().position = position;
-		CardController cardController = card.GetComponent<CardController>();
-		cardController.SetCardSO(cardSO);
-
-		Image[] icons = card.GetComponentsInChildren<Image>();
-		Image icon = null;
-		Image background = null;
-		Image backFace = null;
-		foreach(Image i in icons)
+		for(int i = 0; i < cardCount; i++)
 		{
-			if(i.transform.name == "Icon")
-			{
-				icon = i;
-			}
-			else if(i.transform.name == "Backface")
-			{
-				backFace  = i;
-			}
-			else if(i.transform.name == "Background")
-			{
-				background = i;
-			}
+			availablePositionIndexes.Add(i);
 		}
-
-		string bf_name = "Icons/bg" + DifficultyHelper.GetDifficultyString(difficulty) + "_" + DifficultyHelper.GetIconSizeByDifficulty(difficulty);
-		backFace.sprite = Resources.Load<Sprite>(bf_name);
-		backFace.rectTransform.sizeDelta = new Vector2(cardSize, cardSize);
-
-		string bg_name = "Icons/background" + "_" + DifficultyHelper.GetIconSizeByDifficulty(difficulty);
-		background.sprite = Resources.Load<Sprite>(bg_name);
-		background.rectTransform.sizeDelta = new Vector2(cardSize, cardSize);
-
-		icon.sprite = cardSO.GetCardImageBySize((int)difficulty);
-		icon.rectTransform.sizeDelta = new Vector2(cardSize, cardSize);
-		//card.transform.localScale = new Vector3(cardSize / 100.0f, cardSize / 100.0f, 1);
-
-		cardController.SetImages(backFace, icon, background);
-		cardController.SetBackfaceActive();
-
-		cards.Add(card);
 	}
-
 }

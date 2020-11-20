@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: avocado
   pairName: egg
-  cardImage:
-  - {fileID: 21300000, guid: 934f69728598a374f9dd6ebbe6a69da3, type: 3}
-  - {fileID: 21300000, guid: c46ed4ba3600ca04ebb3d2e64ad1f72d, type: 3}
-  - {fileID: 21300000, guid: 891401bb671e53c4296e7f95cb5189ec, type: 3}
+  cardImage: {fileID: 21300000, guid: 891401bb671e53c4296e7f95cb5189ec, type: 3}

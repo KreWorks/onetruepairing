@@ -7,12 +7,7 @@ public class CardSO : ScriptableObject
 {
 	public string cardName;
 	public string pairName;
-	public Sprite[] cardImage = new Sprite[3];
-
-	public Sprite GetCardImageBySize(int size)
-	{
-		return cardImage[size];
-	}
+	public Sprite cardImage;
 
 	public bool IsPair(string givenName)
 	{

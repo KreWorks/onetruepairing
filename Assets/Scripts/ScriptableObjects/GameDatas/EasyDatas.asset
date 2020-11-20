@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d2280fa3456644498d93264defa0fdc, type: 3}
-  m_Name: 13_piramis
+  m_Script: {fileID: 11500000, guid: b82762f01cd93684d9b574c26f69b799, type: 3}
+  m_Name: EasyDatas
   m_EditorClassIdentifier: 
-  cardName: piramis
-  pairName: mountain
-  cardImage: {fileID: 21300000, guid: 3c1e2b4f9d618ef44beb72027a13e354, type: 3}
+  difficulty: 0
+  rows: 3
+  columns: 4
+  background: {fileID: 21300000, guid: 90ce1e3420477484abbc834a9b001f19, type: 3}
+  preferredPaddingTopBottom: 100
+  spacing: {x: 50, y: 50}

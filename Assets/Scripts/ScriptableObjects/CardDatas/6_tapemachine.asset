@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: tapemachine
   pairName: snail
-  cardImage:
-  - {fileID: 21300000, guid: a1f9fee27feaf5540afb820975334fdd, type: 3}
-  - {fileID: 21300000, guid: 92541bb7fe74c76438994941b674a630, type: 3}
-  - {fileID: 21300000, guid: 7930cf2df069f4b4f8aad2892ad1673c, type: 3}
+  cardImage: {fileID: 21300000, guid: 7930cf2df069f4b4f8aad2892ad1673c, type: 3}

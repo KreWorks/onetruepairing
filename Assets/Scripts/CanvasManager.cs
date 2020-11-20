@@ -5,41 +5,61 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
-	public float sidebarPercent;
-	public RectTransform sideBar;
-	public RectTransform playArea;
-
 	public GameObject cardPrefab;
-	public CardCollectionSO cardCollection;
 
-	CanvasScaler canvasScaler;
-	Vector2 canvasResolution;
-	float canvasWidth;
+	public GameDatasSO easyData;
+	public GameDatasSO normalData;
+	public GameDatasSO hardData;
+
+	GameDatasSO gameDatas;
+	CardGridGenerator cardGridGenerator;
+
 
 	void Awake()
 	{
-		canvasScaler = this.GetComponent<CanvasScaler>();
-		canvasResolution = canvasScaler.referenceResolution;
+		GetGameDatasByDifficulty();
 
-		canvasWidth = canvasResolution.x;
-		StartResizer();
+		SetCardGridLayoutParams();
+		GenerateCards();
+	}
+	private void SetCardGridLayoutParams()
+	{
+		CardGridLayout cardGridLayout = this.GetComponent<CardGridLayout>();
 
+		cardGridLayout.preferredPadding = gameDatas.preferredPaddingTopBottom;
+		cardGridLayout.rows = gameDatas.rows;
+		cardGridLayout.columns = gameDatas.columns;
+		cardGridLayout.spacing = gameDatas.spacing;
+
+		cardGridLayout.Invoke("CalculateLayoutInputHorizontal", 0.1f);
 	}
 
-
-	public void StartResizer()
+	private void GetGameDatasByDifficulty()
 	{
-		float sidebarWidth = canvasWidth * sidebarPercent;
-		float playAreaWidth = canvasWidth - sidebarWidth;
+		Difficulty difficulty = (Difficulty)PlayerPrefs.GetInt("difficulty", (int)Difficulty.NORMAL);
 
-		sideBar.sizeDelta = new Vector2(sidebarWidth, 0);
-		playArea.sizeDelta = new Vector2(playAreaWidth, 0);
+		switch (difficulty)
+		{
+			case Difficulty.EASY:
+				gameDatas = easyData;
+				break;
+			case Difficulty.NORMAL:
+				gameDatas = normalData;
+				break;
+			case Difficulty.HARD:
+				gameDatas = hardData;
+				break;
+		}
 	}
 
-	public void GenerateCardField(Difficulty difficulty)
+	public void GenerateCards()
 	{
-		CardGridGenerator cardGenenrator = new CardGridGenerator(cardPrefab, cardCollection, difficulty, canvasResolution.y, canvasWidth * (1 -  sidebarPercent));
+		int cardCount = gameDatas.rows * gameDatas.columns;
 
-		cardGenenrator.Generate(playArea.transform);
+		for(int i = 0; i < cardCount; i++)
+		{
+			GameObject card = Instantiate(cardPrefab, this.transform);
+			card.transform.name = "Card (" + i.ToString() + ")";
+		}
 	}
 }

@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: cheese
   pairName: cake
-  cardImage:
-  - {fileID: 21300000, guid: ab547b5fa854bba48b3ec39a1427ba7c, type: 3}
-  - {fileID: 21300000, guid: c1b9e033dea1d4040a00f9dd3288be05, type: 3}
-  - {fileID: 21300000, guid: 0c056f1736e511f488749c86f4a0684f, type: 3}
+  cardImage: {fileID: 21300000, guid: 0c056f1736e511f488749c86f4a0684f, type: 3}

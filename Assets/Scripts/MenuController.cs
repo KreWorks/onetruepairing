@@ -1,38 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
+
 
 public class MenuController : MonoBehaviour
 {
-	[Header("Audio Objects")]
-	public AudioSource audioSource;
-
-	[Header("Menu Objects")]
-	public GameObject background;
-	public GameObject mainMenu;
-	public GameObject playMenu;
-	public GameObject highScoreMenu;
-	public GameObject setHighscoreMenu;
-
-	[Header("Timer Objects")]
-	public TextMeshProUGUI timerText;
-	float timerCount;
-
-
-	bool isInMenu = false;
-
-	//public GameObject highScoreLine;
-
 	void Start()
 	{
-		//Reset Menu
-		ResetMenu();
-
-		//Reset timer
-		timerCount = 0.0f;
-
 		//Reset HighScore
 		string[] startNames = { "Bence", "Zita", "Péter", "Franciska", "Lukrécia" };
 
@@ -46,68 +19,27 @@ public class MenuController : MonoBehaviour
 		}
 	}
 
-	void Update()
-	{
-		if (!isInMenu)
-		{
-			timerCount += Time.deltaTime;
-			timerText.text = Mathf.FloorToInt(timerCount).ToString();
-		}	
-	}
-
-	private void ResetMenu()
-	{
-		background.SetActive(true);
-		mainMenu.SetActive(true);
-		isInMenu = true;
-		playMenu.SetActive(false);
-		highScoreMenu.SetActive(false);
-		setHighscoreMenu.SetActive(false);
-	}
-
-	void ExitMenu()
-	{
-		isInMenu = false;
-		background.SetActive(false);
-		mainMenu.SetActive(false);
-		playMenu.SetActive(false);
-		highScoreMenu.SetActive(false);
-		setHighscoreMenu.SetActive(false);
-	}
-
 	public void PlayEasyGame()
 	{
-		SetGamePrefabs(4, 3, (int) Difficulty.EASY);
+		SetGamePrefabs((int) Difficulty.EASY);
 	}
 
 	public void PlayNormalGame()
 	{
-		SetGamePrefabs(5, 4, (int) Difficulty.NORMAL);
+		SetGamePrefabs((int) Difficulty.NORMAL);
 	}
 
 	public void PlayHardGame()
 	{
-		SetGamePrefabs(6, 5, (int) Difficulty.HARD);
+		SetGamePrefabs((int) Difficulty.HARD);
 	}
 
-	void SetGamePrefabs(int x, int y, int difficulty)
+	void SetGamePrefabs(int difficulty)
 	{
-		PlayerPrefs.SetInt("sizeX", x);
-		PlayerPrefs.SetInt("sizeY", y);
 		PlayerPrefs.SetInt("difficulty", difficulty);
-		//PlayerPrefs.SetString("Difficulty", difficulty);
-		//PlayerPrefs.SetString("SpriteSize", spriteSize);
-		//Exit all menu
-		ExitMenu();
-		//TODO start game
-		CardManager cardManager = FindObjectOfType<CardManager>();
-		cardManager.StartGame();
-	}	
 
-	public void PlayClickSound()
-	{
-		audioSource.PlayOneShot(Resources.Load<AudioClip>("Sounds/katt"));
-	}
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+	}	
 
 	public void QuitGame()
 	{

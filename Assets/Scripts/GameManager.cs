@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
 		selectedCards[0] = null;
 		selectedCards[1] = null;
 
-		Difficulty difficulty = Difficulty.EASY; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
+		//Difficulty difficulty = Difficulty.EASY; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
 
-		canvasManager.GenerateCardField(difficulty);
+		//canvasManager.GenerateCardField(difficulty);
 
 		InitStates();
 	}

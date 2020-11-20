@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: ribbon
   pairName: candy
-  cardImage:
-  - {fileID: 21300000, guid: bf56a789b1853074a95e47c862113a89, type: 3}
-  - {fileID: 21300000, guid: 81e93ba25ec175d4d87b315ece75401b, type: 3}
-  - {fileID: 21300000, guid: 4a193490db4336f478d1251cb2451af0, type: 3}
+  cardImage: {fileID: 21300000, guid: 4a193490db4336f478d1251cb2451af0, type: 3}

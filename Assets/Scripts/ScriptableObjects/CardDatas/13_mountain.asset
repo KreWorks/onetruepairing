@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: mountain
   pairName: piramis
-  cardImage:
-  - {fileID: 21300000, guid: 1c8f088b6ee0c8f4db531cd870be03bc, type: 3}
-  - {fileID: 21300000, guid: e67568dc56301e640a8ca64ee3e8b9ae, type: 3}
-  - {fileID: 21300000, guid: 75c2dad4b9d00504ea4da9f81a849243, type: 3}
+  cardImage: {fileID: 21300000, guid: 75c2dad4b9d00504ea4da9f81a849243, type: 3}

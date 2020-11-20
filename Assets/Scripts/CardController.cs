@@ -6,12 +6,12 @@ using UnityEngine.EventSystems;
 
 public class CardController : MonoBehaviour, IPointerDownHandler
 {
-	public Image background;
-	public Image icon;
+	public Image frontFace;
 	public Image backface;
-
+	
 	public ParticleSystem _heartsParticleSystemPrefab;
 	public CardSO cardType;
+
 	GameManager gameManager; 
 
 	public CardState actualState;
@@ -61,8 +61,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	public void SetImages(Image backface, Image icon, Image background)
 	{
 		this.backface = backface;
-		this.icon = icon;
-		this.background = background;
+		/*this.icon = icon;
+		this.background = background;*/
 	}
 
 	public void TransitionState(CardState newState)
@@ -74,29 +74,29 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 
 	public void SetBackfaceActive()
 	{
-		background.gameObject.SetActive(false);
-		icon.gameObject.SetActive(false);
+		/*background.gameObject.SetActive(false);
+		icon.gameObject.SetActive(false);*/
 		backface.gameObject.SetActive(true);
 	}
 
 	public void SetFrontFaceActive()
 	{
-		background.gameObject.SetActive(true);
-		icon.gameObject.SetActive(true);
+		/*background.gameObject.SetActive(true);
+		icon.gameObject.SetActive(true);*/
 		backface.gameObject.SetActive(false);
 	}
 	public void HideAllFaces()
 	{
-		background.gameObject.SetActive(false);
-		icon.gameObject.SetActive(false);
+		/*background.gameObject.SetActive(false);
+		icon.gameObject.SetActive(false);*/
 		backface.gameObject.SetActive(false);
 	}
 
 	public void ChangeScale(float newScale)
 	{
 		backface.transform.localScale = new Vector3(newScale, 1, 1);
-		background.transform.localScale = new Vector3(newScale, 1, 1);
-		icon.transform.localScale = new Vector3(newScale, 1, 1);
+	/*	background.transform.localScale = new Vector3(newScale, 1, 1);
+		icon.transform.localScale = new Vector3(newScale, 1, 1);*/
 	}
 
 	public void Flip()

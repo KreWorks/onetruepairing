@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: pot
   pairName: tophat
-  cardImage:
-  - {fileID: 21300000, guid: 71c23e7b72e6ea640a4054b4a1ddaa79, type: 3}
-  - {fileID: 21300000, guid: 7ddca930b7d35db42b3b345f969b117a, type: 3}
-  - {fileID: 21300000, guid: 42559b8c4b4634245aa333ea8b8d5ba4, type: 3}
+  cardImage: {fileID: 21300000, guid: 42559b8c4b4634245aa333ea8b8d5ba4, type: 3}

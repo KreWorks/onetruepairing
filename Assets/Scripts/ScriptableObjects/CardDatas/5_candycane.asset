@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: candycane
   pairName: cane
-  cardImage:
-  - {fileID: 21300000, guid: c9b43a1cb935e494696166dc0e92cac1, type: 3}
-  - {fileID: 21300000, guid: cc9bc2d59bfe6b44f95d3cd46dc2c961, type: 3}
-  - {fileID: 21300000, guid: 1565f7793e30f234481cca29c7b4526a, type: 3}
+  cardImage: {fileID: 21300000, guid: 1565f7793e30f234481cca29c7b4526a, type: 3}
