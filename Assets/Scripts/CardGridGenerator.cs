@@ -47,10 +47,11 @@ public class CardGridGenerator
 		for (int i = 0; i < count; i += 2)
 		{
 			int randomIndex = GetRandomAvailableIndex();
+			string cardName = "Card number ";
 			//The card
-			CreateCard(this.positions[i], cardCollection.cards[randomIndex], parent);
+			CreateCard(this.positions[i], cardCollection.cards[randomIndex], parent, cardName + i.ToString());
 			//The pair of the card
-			CreateCard(this.positions[i + 1], cardCollection.cards[randomIndex+1], parent);
+			CreateCard(this.positions[i +1], cardCollection.cards[randomIndex+1], parent, cardName + (i+1).ToString());
 		}
 
 		MixCards();
@@ -58,14 +59,11 @@ public class CardGridGenerator
 
 	void GeneratePositions(int sizeX, int sizeY, Transform parent)
 	{
-		float screenHeight = Screen.height;
-		float paddingPercent = (float)(this.padding * (sizeY + 1)) / canvasHeight;
-
 		this.cardSize = (canvasHeight - (this.padding * (sizeY + 1))) / sizeY;
 
-		float startPaddingX = (float)playAreaWidth / 2.0f - (float)(cardSize * sizeX + padding * (sizeX - 1)) / 2.0f;
-		float startPaddingY = (float)cardSize / 2.0f - this.padding ; 
-		
+		float startPaddingX = -(float)(cardSize * sizeX + padding * (sizeX - 1)) / 2.0f;
+		float startPaddingY = -(float)(cardSize * sizeY + padding * (sizeY - 1)) / 2.0f;
+
 		Vector2 startPadding = new Vector2(startPaddingX, startPaddingY);
 
 		for (int y = 0; y < sizeY; y++)
@@ -74,7 +72,9 @@ public class CardGridGenerator
 			{
 				int index = y * sizeX + x;
 
-				this.positions[index] = startPadding + new Vector2((x / 2.0f) * cardSize + (x * this.padding), (y / 2.0f) * cardSize + (y * this.padding));
+				Vector2 pos = new Vector2(x * (cardSize + this.padding), y * (cardSize + this.padding));
+				//this.positions[index] = startPadding + new Vector2((x / 2.0f) * cardSize + (x * this.padding), (y / 2.0f) * cardSize + (y * this.padding));
+				this.positions[index] = (startPadding + pos);
 			}
 		}
 	}
@@ -119,10 +119,16 @@ public class CardGridGenerator
 		return randomIndex;
 	}
 
-	void CreateCard(Vector2 position, CardSO cardSO, Transform parent)
+	void CreateCard(Vector2 position, CardSO cardSO, Transform parent, string cardName)
 	{
 		//Create card object
-		GameObject card = GameObject.Instantiate(cardPrefab, position, Quaternion.identity, parent);
+		GameObject card = GameObject.Instantiate(cardPrefab); //, position, Quaternion.identity, parent);
+		Debug.Log(cardName + " " + position);
+		Debug.Log(cardName + " " + card.transform.position);
+		card.name = cardName;
+		//card.transform.position = position;
+		card.transform.parent = parent;
+		card.GetComponent<RectTransform>().position = position;
 		CardController cardController = card.GetComponent<CardController>();
 		cardController.SetCardSO(cardSO);
 
@@ -156,6 +162,7 @@ public class CardGridGenerator
 
 		icon.sprite = cardSO.GetCardImageBySize((int)difficulty);
 		icon.rectTransform.sizeDelta = new Vector2(cardSize, cardSize);
+		//card.transform.localScale = new Vector3(cardSize / 100.0f, cardSize / 100.0f, 1);
 
 		cardController.SetImages(backFace, icon, background);
 		cardController.SetBackfaceActive();
