@@ -25,6 +25,7 @@ public class MatchingCardsState : GameState
 		{
 			CardController first = gameManager.selectedCards[0].GetComponent<CardController>();
 			first.TransitionState(first.hideAwayState);
+
 			CardController second = gameManager.selectedCards[1].GetComponent<CardController>();
 			second.TransitionState(second.hideAwayState);
 
@@ -35,6 +36,7 @@ public class MatchingCardsState : GameState
 	public override void EndState()
 	{
 		gameManager.RemoveSelectedCards();
+		gameManager.CardCount -= 2;
 	}
 
 }

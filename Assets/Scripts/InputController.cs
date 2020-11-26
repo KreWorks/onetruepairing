@@ -15,6 +15,7 @@ public class InputController : MonoBehaviour
     {
 		if (Input.GetMouseButtonDown(0))
 		{
+			Debug.Log("Kattintást érzékeli");
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
@@ -25,6 +26,7 @@ public class InputController : MonoBehaviour
 			{
 				CardController hittedCard = hit.collider.gameObject.GetComponent<CardController>();
 				hittedCard.actualState.OnClickAction();
+				Debug.Log("Idejön");
 				//hittedCard.SetFlipState(CardController.FlipState.Flipping);
 				/*
 				 * TODO some observer with card objects

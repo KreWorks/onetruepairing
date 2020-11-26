@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndGameState : MonoBehaviour
+public class EndGameState : GameState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public EndGameState(GameManager gameManager) : base(gameManager)
+	{
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void EnterState()
+	{
+		base.EnterState();
+		gameManager.uiController.ActivateEndPanel();
+	}
+
+	public override void UpdateAction()
+	{
+		return;
+	}
 }

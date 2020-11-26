@@ -5,29 +5,42 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-	public CanvasManager canvasManager;
-
-	public GameObject playArea;
+	public UIController uiController;
 
 	GameState gameState;
+
 	public CardSelectionState cardSelectionState;
 	public PairSelectionState pairSelectionState;
 	public MemorizeCardsState memorizeCardsState;
 	public MatchingCardsState matchingCardsState;
+	public EndGameState endGameState;
+	public PauseGameState pauseGameState;
 	//TODO EndGameState and MenuState
 
 	public GameObject[] selectedCards;
 
+	int cardCount;
+	int movesCount;
+
+	public int CardCount
+	{
+		set
+		{
+			cardCount = value;
+		}
+		get
+		{
+			return cardCount;
+		}
+	}
+
 	// Start is called before the first frame update
 	void Start()
 	{
+		movesCount = 0;
 		selectedCards = new GameObject[2];
 		selectedCards[0] = null;
 		selectedCards[1] = null;
-
-		//Difficulty difficulty = Difficulty.EASY; // (Difficulty) PlayerPrefs.GetInt("difficulty", (int) Difficulty.EASY);
-
-		//canvasManager.GenerateCardField(difficulty);
 
 		InitStates();
 	}
@@ -35,6 +48,11 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		gameState.UpdateAction();
+
+		if (cardCount <= 0)
+		{
+			TransitionState(endGameState);
+		}
 	}
 
 	void InitStates()
@@ -43,13 +61,14 @@ public class GameManager : MonoBehaviour
 		pairSelectionState = new PairSelectionState(this);
 		memorizeCardsState = new MemorizeCardsState(this, 0.5f);
 		matchingCardsState = new MatchingCardsState(this, 0.2f);
+		pauseGameState = new PauseGameState(this);
+		endGameState = new EndGameState(this);
 
 		gameState = cardSelectionState;
 	}
 
 	public void TransitionState(GameState newState)
 	{
-		Debug.Log(newState.ToString());
 		gameState.EndState();
 		gameState = newState;
 		gameState.EnterState();
@@ -57,6 +76,9 @@ public class GameManager : MonoBehaviour
 
 	public void SetSelectedCard(GameObject selectedCard)
 	{
+		movesCount++;
+		uiController.ChangeMovesCount(movesCount);
+
 		if (selectedCards[0] == null)
 		{
 			selectedCards[0] = selectedCard;

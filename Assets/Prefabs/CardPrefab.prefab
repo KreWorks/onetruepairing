@@ -114,9 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a12523f8a6d0fa47b977474e3de6019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backface: {fileID: 8421937448666446472}
   frontFace: {fileID: 8421937448641881697}
-  _heartsParticleSystemPrefab: {fileID: 3632061687458112483, guid: e3338f575c896e24ca138e104ff09e0f,
+  backFace: {fileID: 8421937448666446472}
+  heartSpawnerPrefab: {fileID: 7490427089311615878, guid: 2c6d31d681f4561459630a4d8712c625,
     type: 3}
   cardType: {fileID: 0}
 --- !u!1 &8421937448641881699

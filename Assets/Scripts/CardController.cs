@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class CardController : MonoBehaviour, IPointerDownHandler
 {
 	public Image frontFace;
-	public Image backface;
-	
-	public ParticleSystem _heartsParticleSystemPrefab;
+	public Image backFace;
+
 	public CardSO cardType;
 
-	GameManager gameManager; 
+	GameManager gameManager;
+	HeartsManager heartsManager;
 
 	public CardState actualState;
 	public FrontState frontState;
@@ -23,26 +24,20 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	public HideAwayState hideAwayState;
 
 	float cardScale = 1.0f;
-	float flipScale = 0.95f;
-	float flipTolerance = 0.15f;
-
-	float flipSpeed = 400f;
-	float angleTolerance = 10f;
-	Color imageSideColor = new Color(43f / 256, 43f / 256, 43f / 256);
-
-	float waitBeforeBackFlip = 0.5f;
-	float timerBeforeBackFlip = 0f;
+	float flipSpeed = 2.0f;
+	float flipTolerance = 0.05f;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+		heartsManager = (HeartsManager)FindObjectOfType(typeof(HeartsManager));
 
 		frontState = new FrontState(this);
 		backState = new BackState(this);
 		flippingState = new FlippingState(this);
 		backFlippingState = new BackFlippingState(this);
-		hideAwayState = new HideAwayState(this, 1.00f);
+		hideAwayState = new HideAwayState(this);
 
 		actualState = backState;
 	}
@@ -53,16 +48,15 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 		actualState.UpdateActivity();
 	}
 
-	public void SetCardSO(CardSO card)
+	internal void SetCardDatas(Sprite background, CardSO card)
 	{
 		this.cardType = card;
-	}
 
-	public void SetImages(Image backface, Image icon, Image background)
-	{
-		this.backface = backface;
-		/*this.icon = icon;
-		this.background = background;*/
+		frontFace.sprite = card.cardImage;
+		backFace.sprite = background;
+
+		backFace.gameObject.SetActive(true);
+		frontFace.gameObject.SetActive(false);
 	}
 
 	public void TransitionState(CardState newState)
@@ -72,49 +66,49 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 		this.actualState.EnterState();
 	}
 
-	public void SetBackfaceActive()
+	public void SwitchFaces()
 	{
-		/*background.gameObject.SetActive(false);
-		icon.gameObject.SetActive(false);*/
-		backface.gameObject.SetActive(true);
+		backFace.gameObject.SetActive(!backFace.gameObject.activeSelf);
+		frontFace.gameObject.SetActive(!frontFace.gameObject.activeSelf);
 	}
 
-	public void SetFrontFaceActive()
+	public void InactivateCard()
 	{
-		/*background.gameObject.SetActive(true);
-		icon.gameObject.SetActive(true);*/
-		backface.gameObject.SetActive(false);
+		backFace.gameObject.SetActive(false);
+		frontFace.gameObject.SetActive(false);
+
+		Image cardImage = this.GetComponent<Image>();
+		Color newColor = cardImage.color;
+		newColor.a = 0.0f;
+		cardImage.color = newColor;
 	}
-	public void HideAllFaces()
+
+	public void AddHeartSpawner()
 	{
-		/*background.gameObject.SetActive(false);
-		icon.gameObject.SetActive(false);*/
-		backface.gameObject.SetActive(false);
+		heartsManager.SpawnHeartSpawner(this.transform.position);
 	}
 
 	public void ChangeScale(float newScale)
 	{
-		backface.transform.localScale = new Vector3(newScale, 1, 1);
-	/*	background.transform.localScale = new Vector3(newScale, 1, 1);
-		icon.transform.localScale = new Vector3(newScale, 1, 1);*/
+		this.transform.localScale = new Vector3(newScale, 1, 1);
 	}
 
 	public void Flip()
 	{
 		//Hide background
-		if (backface.gameObject.activeSelf == true)
+		if (backFace.gameObject.activeSelf == true)
 		{
-			cardScale = cardScale * flipScale;
+			cardScale = cardScale - (flipSpeed * Time.deltaTime);
 			ChangeScale(cardScale);
 			//Show foreground
 			if (flipTolerance > cardScale)
 			{
-				SetFrontFaceActive();
+				SwitchFaces();
 			}
 		}
 		else
 		{
-			cardScale = cardScale * (1.0f / flipScale);
+			cardScale = cardScale  + (flipSpeed * Time.deltaTime);
 			ChangeScale(cardScale);
 
 			if(cardScale >= 1.0f)
@@ -129,19 +123,19 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	public void BackFlip()
 	{
 		//Hide foreground
-		if (backface.gameObject.activeSelf == false)
+		if (backFace.gameObject.activeSelf == false)
 		{
-			cardScale = cardScale * flipScale;
+			cardScale = cardScale - (flipSpeed * Time.deltaTime);
 			ChangeScale(cardScale);
 			//Show foreground
 			if (flipTolerance > cardScale)
 			{
-				SetBackfaceActive();
+				SwitchFaces();
 			}
 		}
 		else
 		{
-			cardScale = cardScale * (1.0f / flipScale);
+			cardScale = cardScale + (flipSpeed * Time.deltaTime);
 			ChangeScale(cardScale);
 
 			if (cardScale >= 1.0f)
@@ -150,14 +144,6 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 				TransitionState(this.backState);
 			}
 		}
-	}
-
-	public void OnDestroy()
-	{
-		Debug.Log("Got destroyed");
-		Vector3 heartPos = new Vector3(transform.position.x, transform.position.y, -1.0f);
-		ParticleSystem endGame = Instantiate(_heartsParticleSystemPrefab, heartPos, transform.rotation);
-		endGame.Play();
 	}
 
 	public void OnPointerDown(PointerEventData eventData)

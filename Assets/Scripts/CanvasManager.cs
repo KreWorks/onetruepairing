@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CanvasManager : MonoBehaviour
 {
 	public GameObject cardPrefab;
+	public CardCollectionSO cardCollection;
 
 	public GameDatasSO easyData;
 	public GameDatasSO normalData;
@@ -14,14 +15,22 @@ public class CanvasManager : MonoBehaviour
 	GameDatasSO gameDatas;
 	CardGridGenerator cardGridGenerator;
 
+	List<CardController> cardControllers;
 
 	void Awake()
 	{
+		cardControllers = new List<CardController>();
 		GetGameDatasByDifficulty();
+
+		cardGridGenerator = new CardGridGenerator(cardCollection, gameDatas);
 
 		SetCardGridLayoutParams();
 		GenerateCards();
+
+		GameManager gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+		gameManager.CardCount = gameDatas.rows * gameDatas.columns;
 	}
+
 	private void SetCardGridLayoutParams()
 	{
 		CardGridLayout cardGridLayout = this.GetComponent<CardGridLayout>();
@@ -52,7 +61,7 @@ public class CanvasManager : MonoBehaviour
 		}
 	}
 
-	public void GenerateCards()
+	private void GenerateCards()
 	{
 		int cardCount = gameDatas.rows * gameDatas.columns;
 
@@ -60,6 +69,24 @@ public class CanvasManager : MonoBehaviour
 		{
 			GameObject card = Instantiate(cardPrefab, this.transform);
 			card.transform.name = "Card (" + i.ToString() + ")";
+
+			cardControllers.Add(card.GetComponent<CardController>());
 		}
+
+		for(int i = 0; i < cardCount/ 2; i++)
+		{
+			CardSO randomCard = cardGridGenerator.GetRandomAvailableCardSO();
+			SetRandomCardToGrid(randomCard);
+
+			CardSO randomCardPair = cardGridGenerator.GetCardPairSO(randomCard.cardName);
+			SetRandomCardToGrid(randomCardPair);
+		}
+	}
+
+	private void SetRandomCardToGrid(CardSO randomCard)
+	{
+		int index = cardGridGenerator.GetRandomCardPositionIndex();
+		CardController cardObject = cardControllers[index];
+		cardObject.SetCardDatas(gameDatas.background, randomCard);
 	}
 }

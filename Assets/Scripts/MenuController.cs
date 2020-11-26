@@ -1,45 +1,45 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
+	public GameObject mainMenuPanel;
+	public GameObject playMenuPanel;
+	public GameObject highScoreMenuPanel;
+
+	public GameObject highScoreUIPrefab;
+	public GameObject highScoreList;
+
+	void Awake()
+	{
+		playMenuPanel.SetActive(false);
+		highScoreMenuPanel.SetActive(false);
+	}
+
 	void Start()
 	{
-		//Reset HighScore
-		string[] startNames = { "Bence", "Zita", "Péter", "Franciska", "Lukrécia" };
+		HighScores highScores = HighScoreHelper.LoadHighScores();
 
-		if (PlayerPrefs.GetInt("Score1", 0) == 0)
+		Debug.Log("HighScore count: " + highScores.entryList.Count);
+
+		foreach (ScoreEntry highScore in highScores.entryList)
 		{
-			for (int i = 1; i <= 5; i++)
+			GameObject hs = Instantiate(highScoreUIPrefab, highScoreList.transform);
+			TMP_Text[] childs = hs.GetComponentsInChildren<TMP_Text>();
+
+			foreach (TMP_Text text in childs)
 			{
-				PlayerPrefs.SetString("Name" + i.ToString(), startNames[i - 1]);
-				PlayerPrefs.SetInt("Score" + i.ToString(), (6 - i) * 50);
+				if (text.gameObject.name == "Name")
+				{
+					text.text = highScore.userName;
+				}
+				else if (text.gameObject.name == "Score")
+				{
+					text.text = highScore.points.ToString();
+				}
 			}
 		}
 	}
-
-	public void PlayEasyGame()
-	{
-		SetGamePrefabs((int) Difficulty.EASY);
-	}
-
-	public void PlayNormalGame()
-	{
-		SetGamePrefabs((int) Difficulty.NORMAL);
-	}
-
-	public void PlayHardGame()
-	{
-		SetGamePrefabs((int) Difficulty.HARD);
-	}
-
-	void SetGamePrefabs(int difficulty)
-	{
-		PlayerPrefs.SetInt("difficulty", difficulty);
-
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-	}	
 
 	public void QuitGame()
 	{

@@ -37,7 +37,7 @@ public class CardGridGenerator
 	{
 		foreach(CardSO card in cardCollection.cards)
 		{
-			if(card.name == cardPairName)
+			if(card.IsPair(cardPairName))
 			{
 				return card;
 			}
@@ -48,14 +48,12 @@ public class CardGridGenerator
 
 	public int GetRandomCardPositionIndex()
 	{
-		int randomIndex = UnityEngine.Random.Range(0, cardCount);
+		int randomIndex = UnityEngine.Random.Range(0, availablePositionIndexes.Count);
+		int randomPosition = availablePositionIndexes[randomIndex];
 
-		while (!availablePositionIndexes.Contains(randomIndex))
-		{
-			randomIndex = UnityEngine.Random.Range(0, cardCount);
-		}
+		availablePositionIndexes.RemoveAt(randomIndex);
 
-		return randomIndex;
+		return randomPosition;
 	}
 
 	void GenerateAvailableImageIndexes()
@@ -74,7 +72,9 @@ public class CardGridGenerator
 
 	private void GenerateAvailablePositionIndexes(int cardCount)
 	{
-		for(int i = 0; i < cardCount; i++)
+		availablePositionIndexes = new List<int>();
+
+		for (int i = 0; i < cardCount; i++)
 		{
 			availablePositionIndexes.Add(i);
 		}
