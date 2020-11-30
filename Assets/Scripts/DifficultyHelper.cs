@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class DifficultyHelper
 {
+
+
 	public static string GetDifficultyString(Difficulty difficulty)
 	{
 		switch (difficulty)

@@ -45,7 +45,7 @@ public class CanvasManager : MonoBehaviour
 
 	private void GetGameDatasByDifficulty()
 	{
-		Difficulty difficulty = (Difficulty)PlayerPrefs.GetInt("difficulty", (int)Difficulty.NORMAL);
+		Difficulty difficulty = (Difficulty)PlayerPrefs.GetInt("Difficulty", (int)Difficulty.NORMAL);
 
 		switch (difficulty)
 		{

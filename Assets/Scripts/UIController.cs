@@ -40,17 +40,20 @@ public class UIController : MonoBehaviour
 
 	public void SaveHighScore()
 	{
+		Difficulty savedDifficulty = (Difficulty)PlayerPrefs.GetInt("Difficulty");
+
 		TimerController timerController = FindObjectOfType<TimerController>();
 		string userName = userNameField.text;
 
-		int score = HighScoreHelper.CalculateHighScore(Mathf.FloorToInt(timerController.GameTime), movesCount);
+		int score = HighScoreHelper.CalculateHighScore(Mathf.FloorToInt(timerController.GameTime), movesCount, savedDifficulty);
 
-		HighScores hs = HighScoreHelper.LoadHighScores();
-		ScoreEntry newHighScore = new ScoreEntry();
-		newHighScore.userName = userName;
-		newHighScore.points = score;
+		HighScores hs = HighScoreHelper.LoadHighScores(savedDifficulty);
+		ScoreEntry newHighScore = new ScoreEntry(userName, score);
 
 		HighScoreHelper.AddHighScore(hs, newHighScore);
+		HighScoreHelper.SaveHighScore(hs, savedDifficulty);
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 	}
 
 	public void QuitToMenu()

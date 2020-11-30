@@ -1923,9 +1923,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 880614433}
+        m_MethodName: SaveHighScore
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2562,7 +2562,7 @@ MonoBehaviour:
   endGamePanel: {fileID: 1377457322}
   pauseGamePanel: {fileID: 1722534282}
   countText: {fileID: 81946016}
-  userNameField: {fileID: 0}
+  userNameField: {fileID: 1819360607}
 --- !u!1 &1055572422
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,7 +3163,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   rows: 3
   columns: 4
-  cellSize: {x: 260.36923, y: 260.36923}
+  cellSize: {x: 260.08493, y: 260.08493}
   spacing: {x: 50, y: 50}
   preferredPadding: 100
 --- !u!114 &1291885393

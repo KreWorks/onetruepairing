@@ -1,43 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ScoreEntry 
+public class ScoreEntry : IComparable
 {
 	public string userName;
-	public int points;
-}
+	public int score;
 
-public class HighScores
-{
-	public List<ScoreEntry> entryList;
-
-	public HighScores()
+	public ScoreEntry(string userName, int score)
 	{
-		entryList = new List<ScoreEntry>();
+		this.userName = userName;
+		this.score = score;
 	}
 
-	public void SortList()
+	public static bool operator < (ScoreEntry left, ScoreEntry right)
 	{
-		List<ScoreEntry> orderedList = new List<ScoreEntry>();
+		return left.score < right.score;
+	}
 
-		while(entryList.Count > 0)
-		{
-			int maxScore = 0;
-			ScoreEntry maxScoreEntry = new ScoreEntry();
-			foreach(ScoreEntry se in entryList)
-			{
-				if(se.points > maxScore)
-				{
-					maxScore = se.points;
-					maxScoreEntry = se;
-				}
-			}
-			entryList.Remove(maxScoreEntry);
-			orderedList.Add(maxScoreEntry);
-		}
+	public static bool operator > (ScoreEntry left, ScoreEntry right)
+	{
+		return left.score > right.score;
+	}
 
-		entryList = orderedList;
+	public static bool operator <= (ScoreEntry left, ScoreEntry right)
+	{
+		return left.score <= right.score;
+	}
+
+	public static bool operator >= (ScoreEntry left, ScoreEntry right)
+	{
+		return left.score >= right.score;
+	}
+
+	public static bool operator == (ScoreEntry left, ScoreEntry right)
+	{
+		return left.score == right.score;
+	}
+
+	public static bool operator != (ScoreEntry left, ScoreEntry right)
+	{
+		return left.score != right.score;
+	}
+
+	public override bool Equals(object obj)
+	{
+		ScoreEntry se = (ScoreEntry)obj;
+ 		return base.Equals(obj);
+	}
+
+	public override int GetHashCode()
+	{
+		return base.GetHashCode();
+	}
+
+	public override string ToString()
+	{
+		return this.userName + " : " + this.score.ToString();
+	}
+
+	public int CompareTo(object obj)
+	{
+		ScoreEntry se = (ScoreEntry)obj;
+		return this.score - se.score;
 	}
 }
