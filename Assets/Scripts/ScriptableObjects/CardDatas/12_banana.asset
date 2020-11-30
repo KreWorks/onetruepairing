@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: banana
   pairName: boomerang
-  cardImage: {fileID: 21300000, guid: 8d86393738724184890b39f29faafee7, type: 3}
+  cardImage: {fileID: 21300000, guid: 43ca2834b0e38d5419e8c00af37e3984, type: 3}

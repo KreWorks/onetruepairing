@@ -12,6 +12,7 @@ public class HideAwayState : CardState
 	{
 		cardController.InactivateCard();
 		cardController.AddHeartSpawner();
+		cardController.audioManager.Play("Cupp");
 	}
 
 }

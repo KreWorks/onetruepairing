@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: baby
   pairName: pineapple
-  cardImage: {fileID: 21300000, guid: 0666d1345fdd66742a13e82f4592abe5, type: 3}
+  cardImage: {fileID: 21300000, guid: e00d53b320aa43643afc3b362faf9289, type: 3}

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: snowman
   pairName: eight
-  cardImage: {fileID: 21300000, guid: 9c6065d270de5f4439dc60d628db4459, type: 3}
+  cardImage: {fileID: 21300000, guid: 1011cf1d6213db84c9072322375c5fe3, type: 3}

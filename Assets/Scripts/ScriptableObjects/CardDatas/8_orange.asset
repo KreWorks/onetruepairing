@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: orange
   pairName: ball
-  cardImage: {fileID: 21300000, guid: 2d3ba679596037848b8121bf0b71f98c, type: 3}
+  cardImage: {fileID: 21300000, guid: 5b7ad418f594c7a4c9b11eb45c466a8b, type: 3}

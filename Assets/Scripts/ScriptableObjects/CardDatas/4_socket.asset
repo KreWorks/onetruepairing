@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: socket
   pairName: pig
-  cardImage: {fileID: 21300000, guid: 9901429ef8837e041b2e653b725b1b65, type: 3}
+  cardImage: {fileID: 21300000, guid: 1cc74a09b158eb2449dc578338d865b2, type: 3}

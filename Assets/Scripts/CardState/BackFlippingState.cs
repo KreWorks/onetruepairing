@@ -8,6 +8,12 @@ public class BackFlippingState : CardState
 	{
 	}
 
+	public override void EnterState()
+	{
+		base.EnterState();
+		cardController.audioManager.Play("BackFlip");
+	}
+
 	public override void UpdateActivity()
 	{
 		cardController.BackFlip();

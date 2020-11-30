@@ -8,6 +8,12 @@ public class FlippingState : CardState
 	{
 	}
 
+	public override void EnterState()
+	{
+		base.EnterState();
+		cardController.audioManager.Play("Flip");
+	}
+
 	public override void UpdateActivity()
 	{
 		cardController.Flip();

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: pie
   pairName: pi
-  cardImage: {fileID: 21300000, guid: f751f8449b9a74e409c81a505e34fc0b, type: 3}
+  cardImage: {fileID: 21300000, guid: 05c8d368b4d17cd459292e40b3209e35, type: 3}

@@ -14,6 +14,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 
 	GameManager gameManager;
 	HeartsManager heartsManager;
+	public AudioManager audioManager;
 
 	public CardState actualState;
 	public FrontState frontState;
@@ -32,6 +33,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler
 	{
 		gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
 		heartsManager = (HeartsManager)FindObjectOfType(typeof(HeartsManager));
+		audioManager = (AudioManager)FindObjectOfType(typeof(AudioManager));
 
 		frontState = new FrontState(this);
 		backState = new BackState(this);

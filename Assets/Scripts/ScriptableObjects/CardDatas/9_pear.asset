@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: pear
   pairName: bulb
-  cardImage: {fileID: 21300000, guid: 3870db51953a4c2488b5fea79b5724f7, type: 3}
+  cardImage: {fileID: 21300000, guid: 1a7471efe2ec4b64ebe9bf590f8289a2, type: 3}

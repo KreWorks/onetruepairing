@@ -15,6 +15,6 @@ MonoBehaviour:
   difficulty: 2
   rows: 5
   columns: 6
-  background: {fileID: 21300000, guid: f4b32d5c9efb1754cb0718f066f18135, type: 3}
+  background: {fileID: 21300000, guid: 669dfdaa65bd3c8489b15e805734eb1e, type: 3}
   preferredPaddingTopBottom: 60
   spacing: {x: 30, y: 30}

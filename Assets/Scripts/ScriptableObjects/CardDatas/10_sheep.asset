@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: sheep
   pairName: cloud
-  cardImage: {fileID: 21300000, guid: c4f2741d02e046f47ac8634ba3aae4f8, type: 3}
+  cardImage: {fileID: 21300000, guid: e608612b88fc44648aa088609c212eeb, type: 3}
